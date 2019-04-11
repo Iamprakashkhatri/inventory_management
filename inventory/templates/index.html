@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<br>
+<div class="button-group">
+    <a href="{% url 'inventory:display_laptops' %}" class="btn btn-primary btn-md" role="button">Laptops</a>
+    <a href="{% url 'inventory:add_laptops' %}" class="btn btn-warning btn-sm" role="button">+</a>
+
+    <a href="{% url 'inventory:display_desktops' %}" class="btn btn-primary btn-md" role="button">Desktops</a>
+    <a href="{% url 'inventory:add_desktops' %}" class="btn btn-warning btn-sm" role="button">+</a>
+
+    <a href="{% url 'inventory:display_mobiles' %}" class="btn btn-primary btn-md" role="button">Mobiles</a>
+    <a href="{% url 'inventory:add_mobiles' %}" class="btn btn-warning btn-sm" role="button">+</a>
+
+</div>
+<br>
+
+<h4>Currently Viewing {{ header }}</h4>
+<table class="table table-hover">
+    <thread>
+        <tr>
+            <th>id</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Status</th>
+
+        </tr>
+    </thread>
+    <tbody>
+            {% for item in items %}
+
+            <tr>
+              <td>{{ item.pk }}
+              <td>{{ item.type }}</td>
+              <td>{{ item.price }} $</td>
+              <td>{{ item.status }}</td>
+              <td>{{ item.issues }}</td>
+
+              {% if header|lower == "laptops" %}
+        <td>
+            <a href="{% url 'inventory:edit_laptops' item.pk %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'inventory:delete_laptops' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x</a>
+        </td>
+        {% elif header|lower == "desktops" %}
+        <td>
+            <a href="{% url 'inventory:edit_desktops' item.pk %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'inventory:delete_desktops' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x</a>
+        </td>
+        {% else %}
+        <td>
+            <a href="{% url 'inventory:edit_mobiles' item.pk %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'inventory:delete_mobiles' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x</a>
+        </td>
+        {% endif %}
+            </tr>
+
+            {% endfor %}
+
+        
+    </tbody>
+</table>
+
+{% endblock %}
